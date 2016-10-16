@@ -1,5 +1,6 @@
 package com.example
 
+import com.example.controller.GitHubController
 import org.json4s.DefaultFormats
 import org.json4s.native.JsonMethods
 
@@ -7,7 +8,10 @@ import scala.io.Source
 
 object Main {
   def main(args: Array[String]): Unit = {
-    println(Settings.gitHub.id)
+    // selenium debug log の抑制
+    java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.SEVERE)
+
+    new GitHubController
   }
 }
 
