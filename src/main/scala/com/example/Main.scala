@@ -29,12 +29,15 @@ object Settings {
   private implicit val formats = DefaultFormats
   private val values = JsonMethods.parse(jsonText).extract[Values]
   val gitHub: GitHub = values.gitHub
+  val pullreq: Pullreq = values.pullreq
 
   /**
     * for json extract
     */
-  case class Values(gitHub: GitHub)
+  case class Values(gitHub: GitHub, pullreq: Pullreq)
 
   case class GitHub(id: String, password: String)
+
+  case class Pullreq(taskKeyRegexFormat: String, ignoredTaskKeyList: List[String])
 
 }
