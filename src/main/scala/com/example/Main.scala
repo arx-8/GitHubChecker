@@ -38,6 +38,13 @@ object Settings {
 
   case class GitHub(id: String, password: String)
 
-  case class Pullreq(taskKeyRegexFormat: String, ignoredTaskKeyList: List[String])
+  case class Pullreq(
+      taskKeyRegexFormat: String,
+      ignoreTaskKeyList: List[String],
+      labelWaitingMerge: String,
+      labelWaitingFix: String,
+      labelUnusedList: List[String],
+      labelReviewerList: List[String]
+  )
 
 }

@@ -11,3 +11,10 @@ object Const {
   val URL_GITHUB_LOGIN = "https://github.com/login"
   val URL_GITHUB_PULLREQ = "https://github.com/pulls"
 }
+
+/**
+  * toStringで個別クラス名が取得できる
+  */
+abstract class Enum {
+  def values: List[_]
+}
