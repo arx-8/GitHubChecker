@@ -20,11 +20,12 @@ object Settings {
   private val values = JsonMethods.parse(jsonText).extract[Values]
   val gitHub: GitHub = values.gitHub
   val pullreq: Pullreq = values.pullreq
+  val slack: Slack = values.slack
 
   /**
     * for json extract
     */
-  case class Values(gitHub: GitHub, pullreq: Pullreq)
+  case class Values(gitHub: GitHub, pullreq: Pullreq, slack: Slack)
 
   case class GitHub(id: String, password: String)
 
@@ -36,5 +37,7 @@ object Settings {
       labelUnusedList: List[String],
       labelReviewerList: List[String]
   )
+
+  case class Slack(apiToken: String, postChannel: String)
 
 }
