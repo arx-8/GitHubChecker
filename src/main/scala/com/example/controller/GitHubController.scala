@@ -22,7 +22,7 @@ class GitHubController {
     println("ログイン成功")
   }
 
-  def getPullreqList: List[PullreqDto] = {
+  def fetchPullreqList: List[PullreqDto] = {
     // get pullreq's
     driver.get(Const.URL_GITHUB_PULLREQ)
     val prEleList = findElementsByCssSelector4s(driver, ".js-navigation-container .js-issue-row")
@@ -53,9 +53,10 @@ class GitHubController {
         val labels = findElementsByCssSelector4s(pr, ".labels a").map(_.getText.trim)
 
         // TODO 詳細ページにアクセスして、情報を読み取る
+        val isConflict = false
 
 
-        new PullreqDto(url, taskKey, taskName, labels)
+        new PullreqDto(url, taskKey, taskName, labels, isConflict)
       })
       .filter(p => {
         !Settings.pullreq.ignoreTaskKeyList.contains(p.taskKey)
@@ -128,9 +129,13 @@ class PullreqDto(
     val url: String,
     val taskKey: String,
     val taskName: String,
-    val labelList: List[String]) {
+    val labelList: List[String],
+    val isConflict: Boolean) {
 
   val statusList = getStatusList
+
+  // TODO
+  val needNoticeList: List[Status] = List.empty
 
   /**
     * TODO より詳細に分類する必要がある
@@ -181,8 +186,10 @@ object StatusEnum extends Enum {
 
   case object InvalidWaitingFix extends Status("レビュー指摘対応が必要")
 
-  case object InvalidNeedLabelWaitingMarge extends Status("【警告】「マージ待ち」ラベルが必要")
+  case object InvalidNeedLabelWaitingMarge extends Status("「マージ待ち」ラベルが必要")
 
-  case object InvalidDetectUnusedLabel extends Status("【警告】変なラベルが付いてる")
+  case object InvalidDetectUnusedLabel extends Status("変なラベルが付いてる")
+
+  case object InvalidConflict extends Status("コンフリクトしてる")
 
 }
