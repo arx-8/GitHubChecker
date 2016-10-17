@@ -9,7 +9,7 @@ case class Settings(gitHubId: String, gitHubPassword: String)
 
 object Settings {
   // TODO catch FileNotFoundException
-  private val jsonText = Source.fromFile(Const.PATH_SETTINGS_FILE)
+  private val jsonText = Source.fromFile(Const.PATH_SETTINGS_FILE, "utf-8")
     .getLines()
     // コメントアウト行の除外
     .filter(!_.toString.trim.startsWith("//"))
